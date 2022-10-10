@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ProfileLinker</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="{% static 'app/css/style.css' %}" />
+  </head>
+  <body>
+    <div class="topbtn">
+      <a type="button" class="btn btn-danger" href="logout/">Logout</a>
+
+      <button
+        type="button"
+        class="btn btn-success"
+        type="button"
+        data-bs-toggle="modal"
+        data-bs-target="#exampleModal3"
+      >
+        Share
+      </button>
+    </div>
+    <div class="container">
+      <div class="text-center bbt">
+        {% if imgdata.image %}
+        <img
+          src="{{imgdata.image.url}}"
+          class="rounded mt-3"
+          style="
+            background-color: rgb(66, 76, 84);
+            max-height: 20%;
+            max-width: 20%;
+          "
+          alt=""
+        />
+        {% else %}
+        <img
+          src="https://img.freepik.com/premium-vector/default-image-icon-vector-missing-picture-page-website-design-mobile-app-no-photo-available_87543-7509.jpg?w=900"
+          style="background-color: rgb(66, 76, 84); height: 20%; width: 20%"
+          class="rounded mt-3"
+          alt=""
+        />
+        {% endif %}
+
+        <button
+          type="button"
+          class="btn btn-primary bbnl"
+          data-bs-toggle="modal"
+          data-bs-target="#exampleModal"
+        >
+          Uplaod
+        </button>
+      </div>
+      <div class="alldetails">
+        <h4>{{imgdata.name}}</h4>
+        <h5>{{imgdata.Education}}</h5>
+        <h5>{{imgdata.email}}</h5>
+      </div>
+      <hr />
+      <div class="addurlbox">
+        <!-- Button trigger modal 2-->
+        <button
+          type="button"
+          class="btn btn-primary"
+          data-bs-toggle="modal"
+          data-bs-target="#exampleModal2"
+        >
+          Add Link
+        </button>
+      </div>
+      <div class="maindetails">
+        <div class="d-flex mt-2">
+          {% for i in linkdata %}
+
+          <div class="card me-3" style="width: 18rem; color: black">
+            <div class="card-body">
+              <h5 class="card-title">{{i.nameLink}}</h5>
+              <a href="{{i.link}}" class="card-text">link</a>
+              <a href="#" class="btn btn-primary">DELETE</a>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+      <div class="addproject mt-3">
+        <button
+          type="button"
+          class="btn btn-success"
+          type="button"
+          data-bs-toggle="modal"
+          data-bs-target="#addproject1"
+        >
+          Add Project
+        </button>
+        <div class="d-flex mt-2">
+          {% if projectis %} {% for i in projectis %}
+          <div class="card me-3" style="width: 18rem; color: black">
+            <div class="card-body">
+              <h5 class="card-title">{{i.projectname}}</h5>
+              <p class="card-text">{{i.desc}}</p>
+              <a href="#" class="btn btn-primary">DELETE</a>
+            </div>
+          </div>
+          {% endfor %} {% else %}
+          <h5 class="card-title">No Project Added</h5>
+          {% endif %}
+        </div>
+      </div>
+
+      <div class="addproject mt-3">
+        <button
+          type="button"
+          class="btn btn-success"
+          type="button"
+          data-bs-toggle="modal"
+          data-bs-target="#Achiment1"
+        >
+          Add Achiment
+        </button>
+    
+        <div class="d-flex mt-2">
+          {% if achimentis %} {% for i in achimentis %}
+          <div class="card me-3" style="width: 18rem; color: black">
+            <div class="card-body">
+              <h5 class="card-title">{{i.nameofachivement}}</h5>
+              <a href="#" class="btn btn-primary">DELETE</a>
+            </div>
+          </div>
+          {% endfor %} 
+          {% else %}
+          <h5 class="card-title">No Achiment</h5>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+    <!-- Button trigger modal -->
+
+    <!-- Modal 1-->
+    <div
+      class="modal fade"
+      id="exampleModal"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form
+              action="imgupload/"
+              method="post"
+              enctype="multipart/form-data"
+            >
+              {% csrf_token %} {{fm.label_tag}}{{fm.as_p}}
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-bs-dismiss="modal"
+                >
+                  Close
+                </button>
+                <input
+                  type="submit"
+                  class="btn btn-primary"
+                  text="Save changes"
+                />
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal 2 -->
+    <div
+      class="modal fade"
+      id="exampleModal2"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel2"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form action="addlink/" method="post">
+              {% csrf_token %} {{detailsfm.label_tag}} {{detailsfm.as_p}}
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-bs-dismiss="modal"
+                >
+                  Close
+                </button>
+                <input
+                  type="submit"
+                  class="btn btn-primary"
+                  text="Save changes"
+                />
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% comment %} link 3 {% endcomment %}
+
+    <div
+      class="modal fade"
+      id="exampleModal3"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel3"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabe3">Modal title</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <a href="profile/"><h3>Click here to go Link</h3></a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="modal fade"
+      id="addproject1"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel3"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabe3">Modal title</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form
+              action="addproject/"
+              method="post"
+              enctype="multipart/form-data"
+            >
+              {% csrf_token %} {{projectfm.label_tag}} {{projectfm.as_p}}
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-bs-dismiss="modal"
+                >
+                  Close
+                </button>
+                <input
+                  type="submit"
+                  class="btn btn-primary"
+                  text="Save changes"
+                />
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="modal fade"
+      id="Achiment1"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel3"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabe3">Modal title</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form action="addachiment/" method="post">
+              {% csrf_token %} {{achivemtnfm.label_tag}} {{achivemtnfm.as_p}}
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-bs-dismiss="modal"
+                >
+                  Close
+                </button>
+                <input
+                  type="submit"
+                  class="btn btn-primary"
+                  text="Save changes"
+                />
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+      integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js"
+      integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>

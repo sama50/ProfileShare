@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ProfileLinker</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="{% static 'app/css/style.css' %}" />
+    <style>
+        
+    </style>
+  </head>
+  <body style="
+  background-color: #fde87c;
+">
+    <div class="profilemain">
+      <div class="container profileinner">
+        <div class="left">
+            <h4>{{detailsmodel.name}}</h4>
+            <h5>{{detailsmodel.Educations}}</h5>
+            </h6>{{detailsmodel.email}}</h6>
+          
+        </div>
+        <div class="imgshow right">
+            <img src="{{detailsmodel.image.url}}" alt="">
+         </div>
+      </div>
+      <div class="linkofsocial container mt-3 d-flex">
+
+        {% for i in linkdatamodel %}
+
+        <div class="card me-3" style="width: 12rem; color: black; align-items: center;">
+            <div class="card-body">
+              <h5 class="card-title"><a href="{{i.link}}" target="_blank" >{{i.nameLink}}</a></h5>   
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+      <div class="projectsecontion container mt-3">
+        <h3 style="color:black; margin-left:45%">Projects</h3>
+        <hr style="color:black">
+        <br>
+        <div class="d-flex">
+            {% for i in projectDetailsmodel %}
+            <div class="card me-3" style="width: 18rem; color: black">
+                <div class="card-body" style="border-radius: 50%;">
+                  <h5 class="card-title">{{i.projectname}}</h5>
+                  <p class="card-text">{{i.desc}}</p>
+                  <a href="{{i.githublink}}" class="btn btn-primary" target="_blank" >Go Github</a>
+                </div>
+              </div>
+          </div>
+          {% endfor %}
+          
+        </div>
+      </div>
+      <div class="achimentsection mt-3" style="color:black">
+        <h3 style="margin-left:45%">Achiments</h3>
+        <div>
+
+            {% for i in achimentModel %}
+            <div class="card mt-3" style="width: 95%; color: black; margin-left:2.5%">
+                <div class="card-body" style="border-radius: 50%;">
+                  <p class="card-title">{{i.nameofachivement}}</p>
+                </div>
+              </div>
+            {% endfor %}
+        </div>
+      </div>
+
+      <div class="skillssection container" style="color:black">
+        <h3 style="margin-left:45%; margin-top:2%">Skills</h3>
+        <div class="d-flex">
+            {% for i in skillmodel %}
+            <div class="mycard">
+                <h3>{{i.skillname}}</h3>
+            </div>
+            {% endfor %}
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
